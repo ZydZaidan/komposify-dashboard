@@ -4,6 +4,7 @@ import SensorCard from "./components/SensorCard";
 import { FaThermometerFull, FaTint, FaVial } from "react-icons/fa";
 import ControlPanel from "./components/ControlPanel";
 import SystemLogs from "./components/SystemLogs";
+import TrendsChart from "./components/TrendsChart";
 
 function App() {
   const sensorData = [
@@ -44,7 +45,14 @@ function App() {
       message: "Kipas Exhaust otomatis dinyalakan.",
     },
   ]);
-
+  const chartData = [
+    { time: '08:00', suhu: 30, ph: 7.0 },
+    { time: '09:00', suhu: 32, ph: 6.8 },
+    { time: '10:00', suhu: 35, ph: 6.5 },
+    { time: '11:00', suhu: 34, ph: 6.9 },
+    { time: '12:00', suhu: 38, ph: 4.5 }, // Simulasi drop pH
+    { time: '13:00', suhu: 36, ph: 5.2 },
+  ];
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
       <Header />
@@ -62,7 +70,12 @@ function App() {
         <hr className="my-8 border-slate-200" />
         <div className="flex flex-col gap-8">
           <ControlPanel />
-          <SystemLogs logs={logs} />  
+                  <hr className="my-2 border-slate-200" />
+
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <SystemLogs logs={logs} />
+            <TrendsChart data={chartData} />  
+          </div>
         </div>
         
       </main>
