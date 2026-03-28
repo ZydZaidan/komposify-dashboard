@@ -5,6 +5,8 @@ import { FaThermometerFull, FaTint, FaVial } from "react-icons/fa";
 import ControlPanel from "./components/ControlPanel";
 import SystemLogs from "./components/SystemLogs";
 import TrendsChart from "./components/TrendsChart";
+import GuideModal from "./components/GuideModal";
+import { FaInfoCircle } from "react-icons/fa";
 
 function App() {
   const sensorData = [
@@ -53,18 +55,31 @@ function App() {
     { time: '12:00', suhu: 38, ph: 4.5 }, // Simulasi drop pH
     { time: '13:00', suhu: 36, ph: 5.2 },
   ];
+
+  const [showGuide, setShowGuide] = useState(false);
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
+<div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
       <Header />
 
-      <main className="p-4 md:p-6 mx-auto">
-        <div className="mb-6">
-          <h2 className="text-xl md:text-2xl font-bold text-slate-800">
-            Smart Monitoring
-          </h2>
-          <p className="text-sm text-slate-500">
-            Data real-time dari sistem sensor ESP32
-          </p>
+      {/* 3. TAMPILKAN MODAL JIKA STATE TRUE */}
+      {showGuide && <GuideModal onClose={() => setShowGuide(false)} />}
+
+      <main className="p-4 md:p-6 mx-auto max-w-7xl">
+        <div className="mb-6 flex justify-between items-center">
+          <div>
+            {/* 4. TAMBAHKAN IKON DI SAMPING JUDUL */}
+            <h2 className="text-xl md:text-2xl font-bold text-slate-800 flex items-center gap-3">
+              Smart Monitoring
+              <button 
+                onClick={() => setShowGuide(true)} // KLIK UNTUK MUNCULIN
+                className="p-1.5 rounded-full hover:bg-slate-100 group transition-colors"
+                title="Lihat Panduan Parameter"
+              >
+                <FaInfoCircle className="text-blue-500 text-base md:text-lg group-hover:scale-110 transition-transform" />
+              </button>
+            </h2>
+            <p className="text-sm text-slate-500">Data real-time dari sistem sensor ESP32</p>
+          </div>
         </div>
         <SensorCard data={sensorData} />
         <hr className="my-8 border-slate-200" />
